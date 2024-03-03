@@ -1,0 +1,83 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.library.mapper.LibMapper">
+
+
+<!-- 책 등록 -->
+
+<insert id="insertBookInfo" parameterType="com.library.dto.BookDTO">
+   insert into book_info(isbn, title, author, publisher,category)
+      values (#{isbn},#{title},#{author},#{publisher},#{category})
+   
+   </insert>	
+  
+
+<insert id="insertBooks" parameterType="com.library.dto.BookDTO">
+insert into books(isbn,b_status,stock_count_status,due_date) 
+   values (#{isbn},"A",null,null);
+   </insert>	
+    
+    
+<!-- -->
+<select id="selectBookInfo" resultType="com.library.dto.BookDTO" parameterType="string">
+  	
+  		select * 
+  		from book_info 
+  		where isbn = #{isbn}
+  	
+	</select>
+
+<!-- 
+<select id="bringBooksInfo" resultType="com.library.dto.BookDeleteDto" parameterType="String">
+    SELECT books.b_id, books.isbn, book_info.title, book_info.author
+    FROM books
+    JOIN book_info ON books.isbn = book_info.isbn
+    WHERE books.isbn = #{isbn} AND books.b_status != 'D'
+</select>
+ -->
+
+<select id="bringBooksInfo"
+		parameterType="com.library.dto.SearchQuery"
+		resultType="com.library.dto.DeleteDto">
+SELECT bi.TITLE, bi.AUTHOR,bi.PUBLISHER,bi.CATEGORY, b.B_STATUS,b.b_id
+		FROM books b
+		JOIN book_info bi ON b.ISBN = bi.ISBN
+		WHERE bi.category = #{category}
+		AND b.b_status !='D'
+		<if test="searchKey != '' and searchBy != null">
+          <choose>
+              <when test="searchBy.equals('title')">
+                  AND bi.TITLE LIKE CONCAT('%', #{searchKey}, '%')
+              </when>
+              <when test="searchBy.equals('author')">
+                  AND bi.AUTHOR LIKE CONCAT('%', #{searchKey}, '%')
+              </when>
+              <otherwise>
+              </otherwise>
+          </choose>
+      </if>
+</select>
+
+
+
+
+<update id="deleteBook" parameterType="com.library.dto.BookDeleteDto">
+   update books
+   set
+      b_status = "D"
+   where
+      b_id = #{b_id}
+</update>
+
+
+<select id="getLastInsertId">
+select LAST_INSERT_ID()
+
+</select>
+
+
+
+
+</mapper>

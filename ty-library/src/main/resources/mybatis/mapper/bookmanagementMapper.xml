@@ -1,0 +1,65 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.library.mapper.bookmanagementMapper">
+
+<!-- ============ insert ============ -->
+    <insert id="insertCheckout" parameterType="com.library.dto.CheckoutDTO">  
+    	insert into checkout (b_id, e_id, rent_date)
+    	values(#{b_id}, #{e_id}, #{rent_date})
+    </insert>
+  
+<!--  ============ select ============ -->
+    <select id="selectBookInfo" parameterType="_int" resultType="com.library.dto.BookInfoDTO"> 
+    	select	book_info.isbn, book_info.title, book_info.author, book_info.publisher, book_info.category
+    	from 	book_info left join books
+    	on		book_info.isbn=books.isbn
+    	where 	books.b_id=#{b_id}
+    </select>
+    
+    <select id="selectBooks" parameterType="_int" resultType="com.library.dto.BooksDTO"> 
+    	select	b_id, b_status, due_date
+    	from 	books
+    	where 	b_id=#{b_id}
+    </select>
+    
+    <select id="selectEmplInfo" parameterType="string" resultType="com.library.dto.EmployeeDTO"> 
+    	select	e_id, e_name
+    	from 	employees
+    	where 	e_id=#{e_id}
+    </select>
+    
+    <select id="selectAllEmplInfo" resultType="com.library.dto.EmployeeDTO"> 
+    	select	e_id, e_name, e_password
+    	from 	employees
+    </select>
+    
+    <select id="selectEmplInfoByBid" parameterType="_int" resultType="com.library.dto.EmployeeDTO"> 
+    	select	employees.e_id, employees.e_name
+    	from 	employees left join checkout
+    	on		employees.e_id=checkout.e_id
+    	where 	checkout.b_id = #{b_id} and checkout.return_date is null
+    </select>
+    
+    <select id="selectCidByBid" parameterType="_int" resultType="string"> 
+    	select	c_id
+    	from 	checkout
+    	where 	b_id=#{b_id} and return_date is null
+    </select>   
+ 
+ 
+<!-- ============ update ============ -->
+	<update id="updateBooks" parameterType="com.library.dto.BooksDTO"> 
+    	update books
+    	set	   b_status = #{b_status}, due_date = #{due_date, jdbcType=VARCHAR}
+    	where  b_id = #{b_id}
+    </update>
+        
+    <update id="updateCheckout" parameterType="map"> 
+    	update checkout
+    	set	   return_date = #{rent_date}
+    	where  b_id = #{b_id} and return_date is null
+    </update>
+
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.library.mapper.SearchMapper">
+
+	<select id="maxNum" resultType="int">
+		select nvl(max(num),0) from board
+	</select>
+
+	<select id="getDataCount" parameterType="hashMap"
+		resultType="int">
+		select nvl(count(*),0) from books
+		where ${searchKey} like
+		'%' || #{searchValue} || '%'
+	</select>
+
+	<select id="getLists"
+        parameterType="com.library.dto.SearchQuery"
+        resultType="com.library.dto.SearchResultDto">
+    SELECT bi.TITLE, bi.AUTHOR, bi.PUBLISHER, bi.CATEGORY, b.B_STATUS,
+           co.e_id, b.b_id
+    FROM books b
+    JOIN book_info bi ON b.ISBN = bi.ISBN
+    LEFT JOIN checkout co ON b.b_id = co.b_id
+    <where>
+        <if test="category != '전체 도서'">
+            AND bi.CATEGORY = #{category}
+        </if>
+        AND (co.return_date IS NULL)
+        AND b.b_status != 'D'
+        <if test="searchKey != '' and searchBy != null">
+            <choose>
+                <when test="searchBy.equals('title')">
+                    AND bi.TITLE LIKE CONCAT('%', #{searchKey}, '%')
+                </when>
+                <when test="searchBy.equals('author')">
+                    AND bi.AUTHOR LIKE CONCAT('%', #{searchKey}, '%')
+                </when>
+                <otherwise>
+                </otherwise>
+            </choose>
+        </if>
+    </where>
+</select>
+
+
+	<select id="getBook" parameterType="int"
+		resultType="com.library.dto.SearchResultDto">
+		SELECT bi.TITLE, bi.AUTHOR, bi.PUBLISHER, bi.CATEGORY,
+		b.B_STATUS, e.e_name,
+		b.b_id
+		FROM checkout co
+		JOIN books b ON co.b_id =
+		b.b_id
+		JOIN book_info bi ON b.ISBN = bi.ISBN
+		LEFT JOIN employees e ON
+		co.e_id = e.e_id
+		WHERE b.ISBN IN (
+		SELECT b2.ISBN
+		FROM checkout co2
+		JOIN
+		books b2 ON co2.b_id = b2.b_id
+		WHERE co2.b_id = #{id}
+		)
+		AND
+		co.return_date IS NULL
+
+	</select>
+	<select id="getOverdue" resultType="com.library.dto.OverdueDto">
+	
+		SELECT bi.TITLE, e.e_name, books.due_date,
+		CONCAT(DATEDIFF(NOW(), books.due_date), '일') AS day_difference
+		FROM books
+		JOIN book_info bi ON books.ISBN = bi.ISBN
+		LEFT JOIN checkout co ON books.b_id = co.b_id
+		LEFT JOIN employees e ON co.e_id = e.e_id
+		WHERE books.due_date <![CDATA[<]]> CURDATE()
+		AND co.return_date IS NULL
+		
+	</select>
+
+</mapper>

@@ -1,0 +1,157 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.library.mapper.adminStockMapper">
+
+	<!-- update -->
+	<update id="updateInitialNStock">
+		UPDATE books
+		SET STOCK_COUNT_STATUS = 'N'
+		WHERE
+		B_STATUS = 'A'
+	</update>
+
+	<update id="updateYStockByBId" >
+		UPDATE BOOKS
+		SET
+		STOCK_COUNT_STATUS = 'Y'
+		WHERE B_ID = #{id}
+	</update>
+	
+	<update id="updateNStatusByBid" >
+		UPDATE BOOKS
+		SET
+		B_STATUS = 'A'
+		WHERE B_ID = #{id}
+	</update>
+	<!-- update return -->
+	<update id="updateReturn" >
+		UPDATE CHECKOUT
+		SET
+		RETURN_DATE = #{param2}
+		WHERE C_ID = #{param1}	
+	</update>
+	<!-- password reset -->
+	<update id="updatePassword">
+		UPDATE EMPLOYEES
+		SET
+		E_PASSWORD = '0000'
+		WHERE E_ID = #{id}
+	</update>
+	<!-- select -->
+	<select id="selectBooksByBId" 
+		resultType="com.library.dto.StockBookDTO">
+		select book_info.TITLE, books.B_ID
+		from book_info
+		join books
+		on book_info.ISBN = books.ISBN
+		WHERE B_ID = #{id}
+	</select>
+	
+	<!-- 리턴 조회 -->
+	<select id="isReturnalbe">
+		SELECT C_ID 
+		FROM CHECKOUT
+		WHERE RETURN_DATE is NULL
+		AND B_ID = #{id}
+	</select>
+
+	<!-- 대여중 조회 -->
+	<select id="selectBooksByYState"
+		resultType="com.library.dto.BooksDTO">
+		SELECT *
+		FROM books
+		WHERE B_STATUS != 'A'
+	</select>
+	
+		<select id="selectBooksByRstaus">
+		SELECT COUNT(b_id)
+		FROM books
+		WHERE B_STATUS = 'R'
+		AND B_ID = #{id}
+	</select>
+	
+	<!-- 대여 아닌거 재고 상태 조회 -->
+	<select id="selectBooksByNStateAndNStock"
+		resultType="com.library.dto.BooksDTO">
+		SELECT *
+		FROM books
+		WHERE B_STATUS = 'A' AND
+		STOCK_COUNT_STATUS = 'N'
+	</select>
+	<select id="selectBooksByNStateAndYStock"
+		resultType="com.library.dto.BooksDTO">
+		SELECT *
+		FROM books
+		WHERE B_STATUS = 'A' AND
+		STOCK_COUNT_STATUS = 'Y'
+	</select>
+
+	<!-- 조인쿼리 셀렉 -->
+	<select id="selectBooksByNStockNBook"
+		resultType="com.library.dto.StockBookDTO">
+		select book_info.TITLE, books.B_ID
+		from book_info
+		join books
+		on book_info.ISBN = books.ISBN
+		and books.STOCK_COUNT_STATUS = 'N'
+		and books.B_STATUS = 'A'
+	</select>
+
+	<select id="selectBooksByYStockNBook"
+		resultType="com.library.dto.StockBookDTO">
+		select book_info.TITLE, books.B_ID
+		from book_info
+		join books
+		on book_info.ISBN = books.ISBN
+		and books.STOCK_COUNT_STATUS = 'Y'
+		and books.B_STATUS = 'A'
+	</select>
+
+
+
+
+	<select id="getIds">
+		SELECT B_ID
+		FROM BOOKS
+	</select>
+
+
+
+	<select id="selectRentRecordsByDateRange" parameterType="map"
+		resultType="com.library.dto.SearchRentRecordDto">
+		SELECT bi.TITLE, e.e_name, co.rent_date,
+		CASE
+		WHEN co.return_date IS NULL THEN '미반납'
+		ELSE co.return_date
+		END AS return_status
+		FROM checkout co
+		JOIN books b ON co.b_id = b.b_id
+		JOIN book_info bi ON b.ISBN = bi.ISBN
+		LEFT JOIN employees e ON co.e_id = e.e_id
+		WHERE co.rent_date BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<!-- 사원 조회 -->
+	<select id="selectByEId" resultType="com.library.dto.EmployeeDTO">
+		SELECT * FROM EMPLOYEES
+		WHERE E_ID LIKE CONCAT('%', #{searchKey} ,'%')
+	</select>
+	<select id="selectByEName" resultType="com.library.dto.EmployeeDTO">
+		SELECT * FROM EMPLOYEES
+		WHERE E_NAME LIKE CONCAT('%', #{searchKey} ,'%')
+	</select>
+	<!-- 사원 확인 -->
+	<select id="selectEid" >
+		SELECT E_ID FROM EMPLOYEES
+		WHERE E_ID =#{ENum}
+	</select>
+	
+	<!-- 인설트 -->
+	<insert id="insertEmployee" >
+		INSERT INTO EMPLOYEES (E_ID,E_NAME,E_PASSWORD)
+		VALUES (#{ENum},#{EName},'0000')
+	</insert>
+
+</mapper>
