@@ -1,0 +1,108 @@
+{
+  "problems": [
+    {
+      "question": "길",
+      "answer": "street",
+      "example1": "board",
+      "example2": "street",
+      "example3": "car",
+      "example4": "bus"
+    },
+    {
+      "question": "사과",
+      "answer": "apple",
+      "example1": "banana",
+      "example2": "apple",
+      "example3": "orange",
+      "example4": "grape"
+    },
+    {
+      "question": "책",
+      "answer": "book",
+      "example1": "pen",
+      "example2": "book",
+      "example3": "desk",
+      "example4": "chair"
+    },
+    {
+      "question": "학교",
+      "answer": "school",
+      "example1": "library",
+      "example2": "school",
+      "example3": "park",
+      "example4": "hospital"
+    },
+    {
+      "question": "강아지",
+      "answer": "dog",
+      "example1": "cat",
+      "example2": "dog",
+      "example3": "rabbit",
+      "example4": "fish"
+    },
+    {
+      "question": "나무",
+      "answer": "tree",
+      "example1": "flower",
+      "example2": "tree",
+      "example3": "rock",
+      "example4": "mountain"
+    },
+    {
+      "question": "물",
+      "answer": "water",
+      "example1": "fire",
+      "example2": "water",
+      "example3": "earth",
+      "example4": "wind"
+    },
+    {
+      "question": "자동차",
+      "answer": "car",
+      "example1": "train",
+      "example2": "car",
+      "example3": "bicycle",
+      "example4": "motorcycle"
+    },
+    {
+      "question": "과일",
+      "answer": "fruit",
+      "example1": "vegetable",
+      "example2": "fruit",
+      "example3": "meat",
+      "example4": "bread"
+    },
+    {
+      "question": "바다",
+      "answer": "sea",
+      "example1": "river",
+      "example2": "sea",
+      "example3": "lake",
+      "example4": "ocean"
+    },
+    {
+      "question": "컴퓨터",
+      "answer": "computer",
+      "example1": "television",
+      "example2": "computer",
+      "example3": "phone",
+      "example4": "tablet"
+    },
+    {
+      "question": "태양",
+      "answer": "sun",
+      "example1": "moon",
+      "example2": "sun",
+      "example3": "star",
+      "example4": "planet"
+    },
+    {
+      "question": "영화",
+      "answer": "movie",
+      "example1": "music",
+      "example2": "movie",
+      "example3": "book",
+      "example4": "painting"
+    }
+  ]
+}

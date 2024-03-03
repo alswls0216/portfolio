@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main_activity">
+
+
+    <TextView
+        android:id="@+id/player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/c_gray_E3E3E3" />
+
+    <ImageView
+        android:id="@+id/mini_logo"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+
+        android:src="@drawable/mini_logo1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="110dp"
+        android:orientation="vertical">
+
+        <android.widget.Button
+            android:id="@+id/wordPractice"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+
+            android:background="@drawable/selector_menu"
+
+            android:text="영단어 맞추기" />
+
+        <android.widget.Button
+            android:id="@+id/findSame"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="10dp"
+
+            android:background="@drawable/selector_menu"
+
+            android:text="같은 그림 찾기" />
+
+        <android.widget.Button
+            android:id="@+id/block"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="10dp"
+
+            android:background="@drawable/selector_menu"
+
+            android:text="테트리스" />
+
+        <android.widget.Button
+            android:id="@+id/rockScissorPaper"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="10dp"
+
+            android:background="@drawable/selector_menu"
+
+            android:text="가우바위보" />
+
+    </LinearLayout>
+
+    <android.widget.Button
+        android:id="@+id/roulette"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="600dp"
+
+        android:background="@color/c_yellow_E0CA3D"
+
+        android:text="캐릭터 선택" />
+
+</RelativeLayout>

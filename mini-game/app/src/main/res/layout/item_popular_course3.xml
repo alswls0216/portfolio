@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020. rogergcc
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+    <ImageView
+        android:background="@drawable/r_lion1"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/top_text_subtitle_card"
+
+        android:layout_width="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:contentDescription="@string/imageAccess" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_vertical_margin"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+
+
+            <TextView
+                android:id="@+id/uId"
+                style="@style/viewParent.headerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_eng"
+                android:text="노챗 넥서스근성"
+                android:textSize="20sp" />
+
+
+        <TextView
+            android:layout_marginEnd="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/uId"
+            android:fontFamily="@font/bariol_regular"
+            android:textSize="20dp"
+            android:text="SCORE : 39850"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            android:textColor="@color/cl_font" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/nav_bar_color" />
+
+    </LinearLayout>
+
+</LinearLayout>
